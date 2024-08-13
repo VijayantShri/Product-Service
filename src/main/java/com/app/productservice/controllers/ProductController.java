@@ -3,11 +3,12 @@ package com.app.productservice.controllers;
 import com.app.productservice.dtos.ExceptionDTO;
 import com.app.productservice.exceptions.ProductNotFoundException;
 import com.app.productservice.models.Product;
-import com.app.productservice.security.services.AuthenticationService;
+// import com.app.productservice.security.services.AuthenticationService;
 import com.app.productservice.services.BaseProductService;
 import com.app.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +21,16 @@ import java.util.List;
 public class ProductController {
 
     private BaseProductService productService;
-    private AuthenticationService authenticationService;
+//    private AuthenticationService authenticationService;
 
     // Constructor injection
     @Autowired
     public ProductController(
-            @Qualifier("SelfProductService") BaseProductService productService,
-            AuthenticationService authenticationService) {
+            @Qualifier("SelfProductService") BaseProductService productService
+//            , AuthenticationService authenticationService
+    ) {
         this.productService = productService;
-        this.authenticationService = authenticationService;
+//        this.authenticationService = authenticationService;
     }
 
     // Setter injection - Rarely used.
@@ -39,8 +41,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product getProductById(
-            @RequestHeader String token,
-            @PathVariable("id") Long id)  throws ProductNotFoundException, AccessDeniedException {
+//            @RequestHeader String token,
+            @PathVariable("id") Long id)  throws ProductNotFoundException {
 //        if (!authenticationService.authenticate(token)) {
 //            throw new AccessDeniedException("You are not authorised");
 //        }
@@ -50,6 +52,13 @@ public class ProductController {
     @GetMapping()
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
+    }
+
+    @GetMapping("/paginated")
+    public Page<Product> getAllProducts(
+            @RequestParam("pageNumber") int pageNumber,
+            @RequestParam("pageSize") int pageSize) {
+        return productService.getAllProducts(pageNumber, pageSize);
     }
 
     @PostMapping()

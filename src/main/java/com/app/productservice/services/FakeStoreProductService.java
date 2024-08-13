@@ -5,6 +5,7 @@ import com.app.productservice.dtos.FakeStoreProductDTO;
 import com.app.productservice.exceptions.ProductNotFoundException;
 import com.app.productservice.models.Product;
 import com.app.productservice.models.ProductCategory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -32,6 +33,11 @@ public class FakeStoreProductService implements BaseProductService {
             products.add(product);
         }
         return products;
+    }
+
+    @Override
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
+        return null;
     }
 
     @Override
