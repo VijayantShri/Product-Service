@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.nio.file.AccessDeniedException;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +23,7 @@ class ProductControllerTest {
     private ProductService productService;
 
     @Test
-    void getProductById() throws ProductNotFoundException {
+    void getProductById() throws ProductNotFoundException, AccessDeniedException {
         // Arrange
         Product dummyProduct = new Product();
         dummyProduct.setId(1L);

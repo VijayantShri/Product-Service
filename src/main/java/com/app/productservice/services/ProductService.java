@@ -5,6 +5,9 @@ import com.app.productservice.models.Product;
 import com.app.productservice.models.ProductCategory;
 import com.app.productservice.repos.CategoryRepo;
 import com.app.productservice.repos.ProductRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +38,12 @@ public class ProductService implements BaseProductService {
     @Override
     public List<Product> getAllProducts() {
         return productRepo.findAll();
+    }
+
+    @Override
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return productRepo.findAll(pageable);
     }
 
     @Override
